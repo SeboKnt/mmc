@@ -1,14 +1,19 @@
-FROM alpine:latest
+# Build stage
+FROM alpine:latest AS build
 
 RUN apk update && apk add \
-    git make cmake libstdc++ gcc g++ libuv-dev openssl-dev hwloc-dev && \
-    rm -rf /var/cache/apk/*
+    git make cmake libstdc++ gcc g++ libuv-dev openssl-dev hwloc-dev
 RUN git clone https://github.com/xmrig/xmrig
 RUN chmod -R 777 /xmrig
+WORKDIR /xmrig
+RUN cmake . && make -j$(nproc)
+
+# Final stage
+FROM alpine:latest
+
+RUN apk add --no-cache libuv hwloc
 RUN adduser -D miner
 USER miner
-WORKDIR /xmrig
-RUN mkdir build
-RUN cmake build/.. && make -j$(nproc)
-#CMD .xmrig/build/xmrig -o gulf.moneroocean.stream:10128 -u 42oBjqSdYUzgRVSj3SZrXF6vUCi1hrG8sNZ3ZA24QbVCS4VQwAmY6TFinzbw1ybyrRUa59zRhcLPfa3B8rLwuybA3CZi39B
-CMD /bin/sh -c "while true; do sleep 60; done"
+WORKDIR /home/miner
+COPY --from=build /xmrig/xmrig .
+CMD ./xmrig -o ${POOL_ADDRESS} -u ${USER_ADDRESS}

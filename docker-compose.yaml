@@ -1,7 +1,6 @@
 version: '3'
 services:
   miner:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    image: seboknt/monero:latest
+    image: seboknt/mmc:latest
+    env_file:
+      - .env
