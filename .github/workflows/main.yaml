@@ -27,4 +27,4 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: seboknt/mm:latest
+          tags: seboknt/mmc:latest
