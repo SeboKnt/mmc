@@ -1,7 +1,6 @@
 # MMC - Monero Miner Container
 
-This project provides a Docker container for mining Monero. 
-It utilizes the XMRig miner to mine Monero and is configured to work with the MoneroOcean pool.
+This project provides a Docker XMRig miner container for mining Monero. 
 
 ## Usage
 
@@ -21,5 +20,3 @@ It utilizes the XMRig miner to mine Monero and is configured to work with the Mo
     ```bash
     docker-compose up -d
     ```
-
-Please note that mining cryptocurrencies requires significant computational resources and may incur high electricity costs. Ensure you understand the costs and benefits of mining before using this project.
