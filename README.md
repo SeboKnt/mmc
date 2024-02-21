@@ -1,0 +1,2 @@
+# mmc
+Monero Miner Continer
